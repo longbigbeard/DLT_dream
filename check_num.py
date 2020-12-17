@@ -2,6 +2,11 @@ from get_history_info import get_exist_info
 
 
 def check_num(num: list) -> list:
+    """
+    检查号码的历史中奖信息
+    :param num: 待检号码
+    :return: 结果
+    """
     exist_info, _ = get_exist_info()
 
     check_num_front = num[0:5]
@@ -9,7 +14,7 @@ def check_num(num: list) -> list:
     hit_list = []
     for exist in exist_info[1:]:
         exist = exist.split(' ')
-        hit_front_num = [x for x in check_num_front if x in exist[1:5]]  # 前区
+        hit_front_num = [x for x in check_num_front if x in exist[1:6]]  # 前区
         hit_back_num = [x for x in check_num_back if x in exist[-2:]]    # 后区
         if len(hit_front_num) + len(hit_back_num) >= 2:                  # 至少命中2个数字才有可能
             hit_num_money = calculate_money(len(hit_front_num), len(hit_back_num))
@@ -28,9 +33,36 @@ def check_num(num: list) -> list:
 
 
 def calculate_money(front_count: int, back_count: int) -> int:
-    return 0
+    """
+    正常来说一等奖和二等奖的奖金都是浮动的，一等奖给500万，二等奖给20万
+    实际上，大多数一等奖会超过500万，二等奖会低于20万
+    :param front_count: 前区命中数量
+    :param back_count: 后区命中数量
+    :return: 奖金
+    """
+    if front_count == 5 and back_count == 2:
+        return 50000000
+    elif front_count == 5 and back_count == 1:
+        return 200000
+    elif front_count == 5 and back_count == 0:
+        return 10000
+    elif front_count == 4 and back_count == 2:
+        return 3000
+    elif front_count == 4 and back_count == 1:
+        return 300
+    elif front_count == 3 and back_count == 2:
+        return 200
+    elif front_count == 4 and back_count == 0:
+        return 100
+    elif front_count == 3 and back_count == 1 or front_count == 2 and back_count == 2:
+        return 15
+    elif (front_count + back_count) == 3 or back_count == 2:
+        return 5
+    else:
+        return 0
 
 
-hit_list = check_num(['01','02','03','04','05','06','07'])
-for x in hit_list:
-    print(x)
+if __name__ == '__main__':
+    hit_list = check_num(['09','12','13','26','33','04','10'])
+    for x in hit_list:
+        print(x)
