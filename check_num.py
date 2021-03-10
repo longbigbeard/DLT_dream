@@ -63,6 +63,10 @@ def calculate_money(front_count: int, back_count: int) -> int:
 
 
 if __name__ == '__main__':
-    hit_list = check_num(['09','12','13','26','33','04','10'])
+    #hit_list = check_num(['09','12','13','26','33','04','10'])
+    #hit_list = check_num(['05','07','19','29','33','05','07'])
+    #hit_list = check_num(['04','07','13','26','33','05','07'])
+    #hit_list = check_num(['03','06','16','22','33','05','10'])
+    hit_list = check_num(['02','09','15','20','33','02','07'])
     for x in hit_list:
         print(x)
